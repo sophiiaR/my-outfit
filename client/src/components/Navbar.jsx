@@ -68,7 +68,7 @@ const Navbar = () => {
                 </Left>
                 <Center>
                     <Logo>
-                        My Outfit
+                        MY OUTFIT
                     </Logo>
                 </Center>
                 <Right>
