@@ -9,10 +9,12 @@ import {
     Room,
     Twitter,
   } from "@material-ui/icons";
+  import { mobile } from "../responsive";
 
 const Container = styled.div`
     display: flex;
-`
+    ${mobile({ flexDirection: "column" })};
+`;
 
 const Left = styled.div`
     display: flex;
@@ -20,23 +22,23 @@ const Left = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
-`
+`;
 
 const Right = styled.div`
     flex: 1;
     padding: 20px;
-
-`
+    ${mobile({ backgroundColor: "#fff8f8" })};
+`;
 
 const Center = styled.div`
     flex: 1;
     padding: 20px;
-
-`
+    ${mobile({ display: "none" })};
+`;
 
 const Title = styled.h3`
     margin-bottom: 30px;
-`
+`;
 
 const List = styled.ul`
     margin: 0;
@@ -44,22 +46,22 @@ const List = styled.ul`
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-`
+`;
 
 const ListItem = styled.li`
     width: 50%;
     margin-bottom: 10px;
-`
+`;
 
 const Logo = styled.h1``
 
 const Description = styled.p`
     margin: 20px 0px;
-`
+`;
 
 const SocialContainer = styled.div`
     display: flex;
-`
+`;
 
 const SocialIcon = styled.div`
     display: flex;
@@ -71,17 +73,17 @@ const SocialIcon = styled.div`
     align-items: center;
     justify-content: center;
     margin-right: 20px;
-`
+`;
 
 const ContactItem = styled.div`
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-`
+`;
 
 const Payment = styled.img`
     width: 50%;
-`
+`;
 
 
 const Footer = () => {

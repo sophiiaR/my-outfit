@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { sliderItems } from "../data";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
     width: 100%;
@@ -11,7 +12,9 @@ const Container = styled.div`
     background-color: aquamarine;
     position: relative;
     overflow: hidden;
+    ${mobile({ display: "none" })};
 `;
+
 const Arrow = styled.div`
     width: 50px;
     height: 50px;
@@ -45,6 +48,7 @@ const Slide = styled.div`
     height: 100vh;
     background-color: #${(props) => props.bg};
 `;
+
 const ImgContainer = styled.div`
     height: 100%;
     width: 100%;
@@ -55,7 +59,7 @@ const Image = styled.img`
     height: 100%;
     width: 90%;
     
-`
+`;
 
 const InfoContainer = styled.div`
     flex: 1;
@@ -64,22 +68,23 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
     font-size: 70px;
-`
+`;
+
 const Description = styled.p`
     margin: 50px 0px;
     font-size: 20px;
     font-weight: 500;
     letter-spacing: 3px;
     text-transform: uppercase;
-`
+`;
+
 const Button = styled.button`
     padding: 10px;
     font-size: 20px;
     background-color: transparent;
     cursor: pointer;
     text-transform: uppercase;
-
-`
+`;
 
 
 
