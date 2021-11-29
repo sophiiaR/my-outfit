@@ -11,8 +11,9 @@ import { useState } from "react";
 
 const Container = styled.div``;
 
-const Title = styled.h1`
+const Title = styled.h2`
     margin: 20px;
+    text-transform: uppercase;
 `;
 
 const FilterContainer = styled.div`
@@ -60,7 +61,7 @@ const ProductList = () => {
         <Container>
             <Announcement />
             <Navbar />
-            <Title>Dresses</Title>
+            <Title>{cat}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products</FilterText>
