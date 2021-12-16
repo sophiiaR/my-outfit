@@ -5,6 +5,11 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../responsive";
+import { useSelector } from 'react-redux';
+import StripeCheckout from "react-stripe-checkout";
+import { useState } from 'react';
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -160,6 +165,15 @@ const Button = styled.button`
 
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart);
+    const [stripeToken, setStripeToken] = useState(null);
+
+    const onToken = (token) => {
+        setStripeToken(token);
+    };
+
+    console.log(stripeToken);
+
     return (
         <Container>
             <Announcement />
@@ -176,55 +190,36 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/288/BUS-PAT-BURTE-1241221/BS_2021_12_124_front.jpg"/>
-                                <Details>
-                                    <ProductName><b>Product:</b> Twill Dress</ProductName>
-                                    <ProductId><b>ID:</b> 45612344</ProductId>
-                                    <ProductColor color="blue"/>
-                                    <ProductSize><b>Size:</b> S</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Remove />
-                                        <ProductAmount>2</ProductAmount>
-                                    <Add />
-                                </ProductAmountContainer>
-                                <ProductPrice>
-                                    $25
-                                </ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        {cart.products.map(product => (
+                            <Product>
+                                <ProductDetail>
+                                    <Image src={product.img}/>
+                                    <Details>
+                                        <ProductName><b>Product:</b> {product.title}</ProductName>
+                                        <ProductId><b>ID:</b> {product._id}</ProductId>
+                                        <ProductColor color={product.color}/>
+                                        <ProductSize><b>Size:</b> {product.size}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Remove />
+                                            <ProductAmount>{product.quantity}</ProductAmount>
+                                        <Add />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>
+                                        $ {product.price * product.quantity}
+                                    </ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
                         <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/288/BUS-PAT-BURTE-1151221/BS_2021_12_115A_front.jpg"/>
-                                <Details>
-                                    <ProductName><b>Product:</b> Knit fabric Top</ProductName>
-                                    <ProductId><b>ID:</b> 45678944</ProductId>
-                                    <ProductColor color="blue"/>
-                                    <ProductSize><b>Size:</b> S</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Remove />
-                                        <ProductAmount>2</ProductAmount>
-                                    <Add />
-                                </ProductAmountContainer>
-                                <ProductPrice>
-                                    $16
-                                </ProductPrice>
-                            </PriceDetail>
-                        </Product>
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 100</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -236,9 +231,20 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$100</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>    
-                        <Button>CHECKOUT NOW</Button>
+                        <StripeCheckout
+                            name= 'My Outfit'
+                            image=''
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${cart.total}`}
+                            amount={cart.total*100}
+                            token={onToken}
+                            stripeKey= {KEY}
+                        >
+                            <Button>CHECKOUT NOW</Button>
+                        </StripeCheckout>
                     </Summary>
                 </Bottom>
             </Wrapper>
