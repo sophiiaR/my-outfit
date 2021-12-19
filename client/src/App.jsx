@@ -11,6 +11,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import Success from './pages/Success';
+
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
           <Cart />
         </Route>
         <Route path="/success">
+          <Success />
         </Route>
         <Route path="/login"><Login /></Route>
         <Route path="/register">
